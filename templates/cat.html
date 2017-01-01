@@ -1,12 +1,12 @@
 <!doctype html>
 <html>
 	<head>
-		<title>Category</title>
+		<title>Category{{ catid }}</title>
 	</head>
 	<body>
 		<pre>
-{% if contenet %}
-{{ content }}
+{% if catlist %}
+{{ catlist }}
 {% else %}
 Nothing here
 {% endif %}

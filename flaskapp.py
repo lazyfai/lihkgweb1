@@ -16,17 +16,17 @@ def index():
 def serveStaticResource(resource):
     return send_from_directory('static/', resource)
 
-@app.route('/cat')
-def listcat():
+@app.route('/cat/<catid>')
+def listcat(catid=None):
     baseURL = 'https://lihkg.com/api_v1/'
     listURL = 'thread/category'
     listParams = dict()
-    listParams['cat_id'] = 12
+    listParams['cat_id'] = catid
     listParams['page'] = 1
     listParams['count'] = 50
     resp = requests.get(url=baseURL+listURL, params=listParams)
     data = json.loads(resp.text)
-    return render_template('cat.html', content=data)
+    return render_template('cat.html', cat=catid, catlist=data)
 
 if __name__ == '__main__':
     app.run()
