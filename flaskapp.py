@@ -43,6 +43,7 @@ def listthread(threadid=None):
     listURL = 'thread/%s/page/1' % ( threadid )
     resp = requests.get(url=baseURL+listURL)
     data = json.loads(resp.text)
+    threadlist = []
     items = data['response']['item_data']
     for i in items:
         postid= i ['post_id']
