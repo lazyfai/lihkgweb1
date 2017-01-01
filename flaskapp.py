@@ -46,7 +46,7 @@ def listcat(catid=None,pageid=None):
     data = json.loads(resp.text)
     catlist = []
     items = data['response']['items']
-    if len(items) < 50:
+    if len(items) < 49:
         nextpage = None
     else:
         nextpage = int(pageid) + 1
