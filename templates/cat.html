@@ -4,6 +4,13 @@
 		<title>Category {{catid}}</title>
 	</head>
 	<body>
+	<a href = '/cat/{{catid}}/page/1'>First</a>
+{% if prevpage %}
+	<a href = '/cat/{{catid}}/page/{{prevpage}}'>Prev</a>
+{% endif %}
+{% if nextpage %}
+	<a href = '/cat/{{catid}}/page/{{nextpage}}'>Next</a>
+{% endif %}
 {% if catlist %}
 		<table border=0 width="80%">
 <tr>

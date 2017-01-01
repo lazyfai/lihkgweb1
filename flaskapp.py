@@ -46,6 +46,14 @@ def listcat(catid=None,pageid=None):
     data = json.loads(resp.text)
     catlist = []
     items = data['response']['items']
+    if data['response']['is_pagination']:
+        nextpage = int(pageid) + 1
+    else:
+        nextpage = None
+    if int(pageid) == 1:
+        prevpage = None
+    else:
+        prevpage = int(pageid) - 1
     for i in items:
         title = i['title']
         threadid= i ['thread_id']
@@ -53,7 +61,7 @@ def listcat(catid=None,pageid=None):
         url = "/thread/%s/page/1" % (threadid)
         catitem = dict(id=threadid,title=title,author=author,url=url)
         catlist.append(catitem)
-    return render_template('cat.html', catid=catid, catlist=catlist)
+    return render_template('cat.html', catid=catid, catlist=catlist, nextpage=nextpage, prevpage=prevpage)
 
 @app.route('/thread/<threadid>/page/<pageid>')
 def listthread(threadid=None,pageid=None):
