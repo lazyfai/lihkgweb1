@@ -2,18 +2,18 @@
 import os
 import json
 import requests
-import flask
+from flask import Flask, render_template, send_from_directory
 
-app = flask.Flask(__name__)
+app = Flask(__name__)
 app.config.from_pyfile('flask.cfg')
 
 @app.route('/')
 def index():
-    return flask.render_template('index.html')
+    return render_template('index.html')
 
 @app.route('/<path:resource>')
 def serveStaticResource(resource):
-    return flask.send_from_directory('static/', resource)
+    return send_from_directory('static/', resource)
 
 @app.route('/cat')
 def listcat():
