@@ -18,11 +18,12 @@ def index():
     channellist = []
     items = data['response']['category_list']
     for i in items:
-        name = i['name']
-        catid= i ['cat_id']
-        url = "/cat/%s/page/1" % (catid)
-        channelitem = dict(id=catid,name=name,url=url)
-        channellist.append(channelitem)
+        if i['postable'] == 'true':
+            name = i['name']
+            catid= i ['cat_id']
+            url = "/cat/%s/page/1" % (catid)
+            channelitem = dict(catid=catid,name=name,url=url)
+            channellist.append(channelitem)
     return render_template('channel.html', channellist=channellist)
 
 @app.route('/<path:resource>')
