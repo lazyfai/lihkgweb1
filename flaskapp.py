@@ -18,7 +18,7 @@ def index():
     channellist = []
     items = data['response']['category_list']
     for i in items:
-        if i['postable'] == 'true':
+        if i['postable'] == true:
             name = i['name']
             catid= i ['cat_id']
             url = "/cat/%s/page/1" % (catid)
