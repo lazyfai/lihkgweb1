@@ -48,8 +48,9 @@ def listthread(threadid=None):
     for i in items:
         postid= i ['post_id']
         author = i['user_nickname']
+        posttime = i['reply_time']
         content = i['msg']
-        threaditem = dict(id=postid,author=author,content=content)
+        threaditem = dict(id=postid,author=author,content=content,time=posttime)
         threadlist.append(threaditem)
     return render_template('thread.html', threadid=threadid, threadlist=threadlist)
 

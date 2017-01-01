@@ -8,12 +8,10 @@
 		<table border=1>
 {% for thread in threadlist %}
 <tr>
-	<td>Post #{{thread.id}}</td>
-	<td>{{thread.author}}</td>
+	<td>Post #{{thread.id}} @ {{thread.time}} by {{thread.author}}</td>
 </tr>
 <tr>
 	<td>{{thread.content}}</td>
-	<td></td>
 </tr>
 {% endfor %}
 		</table>
