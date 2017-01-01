@@ -1,32 +1,6 @@
 #!/usr/bin/env python
 import os
-import json
-import requests
-from flask import Flask, render_template, send_from_directory
-
-app = Flask(__name__)
-app.config.from_pyfile('flask.cfg')
-
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-@app.route('/<path:resource>')
-def serveStaticResource(resource):
-    return send_from_directory('static/', resource)
-
-@app.route('/cat')
-def listcat():
-    baseURL = 'https://lihkg.com/api_v1/'
-    listURL = 'thread/category'
-    listParams = dict(
-        cat_id = 12,
-        page = 1,
-        count = 50
-    )
-    resp = requests.get(url=baseURL+listURL, params=listParams)
-    data = json.loads(resp.text)
-    return data
-
-if __name__ == '__main__':
-    app.run()
+import sys
+sys.path.insert(0, os.path.dirname(__file__) or '.')
+PY_DIR = os.path.join(os.environ['OPENSHIFT_HOMEDIR'], "python")
+from flaskapp import app as application
