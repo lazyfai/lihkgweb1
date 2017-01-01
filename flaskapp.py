@@ -26,6 +26,15 @@ def index():
             channellist.append(channelitem)
     return render_template('channel.html', channellist=channellist)
 
+@app.route('/health')
+def healthcheck():
+    env = []
+    for k, v in os.environ.items():
+        var['name'] = k
+        var['value'] = v
+        env.append(var)
+    return render_template('env.html', env=env)
+
 @app.route('/<path:resource>')
 def serveStaticResource(resource):
     return send_from_directory('static/', resource)
