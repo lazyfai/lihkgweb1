@@ -50,6 +50,15 @@ def listthread(threadid=None,pageid=None):
     data = json.loads(resp.text)
     threadlist = []
     items = data['response']['item_data']
+    lastpage = int(data['response']['total_page'])
+    if pageid == lastpage:
+        nextpage = None
+    else:
+        nextpage = int(pageid) + 1
+    if pageid == 1:
+        prevpage = None
+    else:
+        prevpage = int(pageid) - 1
     for i in items:
         postid= i ['post_id']
         author = i['user_nickname']
@@ -58,7 +67,7 @@ def listthread(threadid=None,pageid=None):
         content = i['msg']
         threaditem = dict(id=postid,author=author,content=content,time=posttime)
         threadlist.append(threaditem)
-    return render_template('thread.html', threadid=threadid, threadlist=threadlist)
+    return render_template('thread.html', threadid=threadid, threadlist=threadlist, nextpage=nextpage, prevpage=prevpage, lastpage=lastpage)
 
 if __name__ == '__main__':
     app.run()

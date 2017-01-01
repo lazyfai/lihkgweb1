@@ -4,14 +4,26 @@
 		<title>Thread {{threadid}}</title>
 	</head>
 	<body>
+	<a href = '/thread/{{threadid}}/page/1'>First</a>
+{% if prevpage %}
+	<a href = '/thread/{{threadid}}/page/{{prevpage}}'>Prev</a>
+{% endif %}
+{% if nextpage %}
+	<a href = '/thread/{{threadid}}/page/{{nextpage}}'>Next</a>
+{% endif %}
+{% if lastpage %}
+	<a href = '/thread/{{threadid}}/page/{{lastpage}}'>Last</a>
+{% endif %}
+	<hr/>
 {% if threadlist %}
-		<table border=1 width="80%">
+		<table border=0 width="80%">
 {% for thread in threadlist %}
 <tr>
-	<td>{{thread.author}} @ {{thread.time}}</td>
-</tr>
-<tr>
-	<td>{{thread.content|safe}}</td>
+	<td>
+	{{thread.author}} @ {{thread.time}}
+	<hr/>
+	{{thread.content|safe}}
+	</td>
 </tr>
 {% endfor %}
 		</table>
