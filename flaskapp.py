@@ -26,7 +26,7 @@ def listcat():
     listParams['count'] = 50
     resp = requests.get(url=baseURL+listURL, params=listParams)
     data = json.loads(resp.text)
-    return data
+    return render_template('cat.html', content=data)
 
 if __name__ == '__main__':
     app.run()
