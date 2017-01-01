@@ -26,14 +26,13 @@ def listcat(catid=None):
     listParams['count'] = 50
     resp = requests.get(url=baseURL+listURL, params=listParams)
     data = json.loads(resp.text)
-    print ("Category [%s] = %s" % (data['response']['category']['cat_id'],data['response']['category']['name']))
     catlist = []
     items = data['response']['items']
     for i in items:
         title = i['title']
         threadid= i ['thread_id']
         author = i['user']['nickname']
-        url = "%sthread/%s/page/1" % (baseURL, threadid)
+        url = "/thread/%s" % (threadid)
         catitem = dict(id=threadid,title=title,author=author,url=url)
         catlist.append(catitem)
     return render_template('cat.html', catid=catid, catlist=catlist)

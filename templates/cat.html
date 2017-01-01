@@ -5,13 +5,17 @@
 	</head>
 	<body>
 {% if catlist %}
-		<table>
+		<table border=1>
+<tr>
+	<th>ID</th>
+	<th>標題</th>
+	<th>作者</th>
+</tr>
 {% for cat in catlist %}
 <tr>
 	<td>{{cat.id}}</td>
-	<td>{{cat.title}}</td>
+	<td><a href={{cat.url}}>{{cat.title}}</a></td>
 	<td>{{cat.author}}</td>
-	<td>{{cat.url}}</td>
 </tr>
 {% endfor %}
 		</table>
