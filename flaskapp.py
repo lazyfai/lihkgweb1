@@ -51,11 +51,11 @@ def listthread(threadid=None,pageid=None):
     threadlist = []
     items = data['response']['item_data']
     lastpage = int(data['response']['total_page'])
-    if pageid == lastpage:
+    if int(pageid) == lastpage:
         nextpage = None
     else:
         nextpage = int(pageid) + 1
-    if pageid == 1:
+    if int(pageid) == 1:
         prevpage = None
     else:
         prevpage = int(pageid) - 1
