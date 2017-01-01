@@ -37,15 +37,15 @@ def listcat(catid=None):
         title = i['title']
         threadid= i ['thread_id']
         author = i['user']['nickname']
-        url = "/thread/%s" % (threadid)
+        url = "/thread/%s/page/1" % (threadid)
         catitem = dict(id=threadid,title=title,author=author,url=url)
         catlist.append(catitem)
     return render_template('cat.html', catid=catid, catlist=catlist)
 
-@app.route('/thread/<threadid>')
-def listthread(threadid=None):
+@app.route('/thread/<threadid>/page/<pageid>')
+def listthread(threadid=None,pageid=None):
     baseURL = 'https://lihkg.com/api_v1/'
-    listURL = 'thread/%s/page/1' % ( threadid )
+    listURL = 'thread/%s/page/%s' % ( threadid, pageid )
     resp = requests.get(url=baseURL+listURL)
     data = json.loads(resp.text)
     threadlist = []
