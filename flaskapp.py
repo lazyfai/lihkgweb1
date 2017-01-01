@@ -20,11 +20,10 @@ def serveStaticResource(resource):
 def listcat():
     baseURL = 'https://lihkg.com/api_v1/'
     listURL = 'thread/category'
-    listParams = dict(
-        cat_id = 12,
-        page = 1,
-        count = 50
-    )
+    listParams = dict()
+    listParams['cat_id'] = 12
+    listParams['page'] = 1
+    listParams['count'] = 50
     resp = requests.get(url=baseURL+listURL, params=listParams)
     data = json.loads(resp.text)
     return data
