@@ -3,7 +3,7 @@ import os
 import json
 import requests
 import datetime
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, render_template, send_from_directory, redirect
 
 app = Flask(__name__)
 app.config.from_pyfile('flask.cfg')
