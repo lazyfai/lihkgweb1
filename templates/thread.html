@@ -11,7 +11,7 @@
 	<td>Post #{{thread.id}} @ {{thread.time}} by {{thread.author}}</td>
 </tr>
 <tr>
-	<td>{{thread.content}}</td>
+	<td>{{thread.content|safe}}</td>
 </tr>
 {% endfor %}
 		</table>
