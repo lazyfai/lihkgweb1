@@ -6,7 +6,7 @@ from flask import Flask, render_template, send_from_directory
 
 app = Flask(__name__)
 app.config.from_pyfile('flask.cfg')
-app.debug = True
+#app.debug = True
 
 @app.route('/')
 def index():
