@@ -26,7 +26,7 @@ def index():
             channellist.append(channelitem)
     return render_template('channel.html', channellist=channellist)
 
-@app.route('/health')
+@app.route('/healthcheck')
 def healthcheck():
     env = []
     for k, v in os.environ.items():
