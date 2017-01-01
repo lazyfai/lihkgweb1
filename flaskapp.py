@@ -36,7 +36,7 @@ def serveAsset(resource):
 
 @app.route('/cat/<catid>/page/<pageid>')
 def listcat(catid=None,pageid=None):
-    baseURL = 'https://lihkg.com/api_v1/'
+    baseURL = 'https://lihkg.com/api_v1_1/'
     listURL = 'thread/category'
     listParams = dict()
     listParams['cat_id'] = catid
@@ -46,10 +46,10 @@ def listcat(catid=None,pageid=None):
     data = json.loads(resp.text)
     catlist = []
     items = data['response']['items']
-    if data['response']['is_pagination']:
-        nextpage = int(pageid) + 1
-    else:
+    if len(items) < 50:
         nextpage = None
+    else:
+        nextpage = int(pageid) + 1
     if int(pageid) == 1:
         prevpage = None
     else:
@@ -65,7 +65,7 @@ def listcat(catid=None,pageid=None):
 
 @app.route('/thread/<threadid>/page/<pageid>')
 def listthread(threadid=None,pageid=None):
-    baseURL = 'https://lihkg.com/api_v1/'
+    baseURL = 'https://lihkg.com/api_v1_1/'
     listURL = 'thread/%s/page/%s' % ( threadid, pageid )
     resp = requests.get(url=baseURL+listURL)
     data = json.loads(resp.text)
