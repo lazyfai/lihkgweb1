@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Category List</title>
+	</head>
+	<body>
+{% if channellist %}
+		<table border=0 width="80%">
+<tr>
+	<th>台號</th>
+	<th>台名</th>
+</tr>
+{% for channel in channellist %}
+<tr>
+	<td>{{channel.catid}}</td>
+	<td><a href={{channel.url}}>{{channel.name}}</a></td>
+</tr>
+{% endfor %}
+		</table>
+{% else %}
+Nothing here
+{% endif %}
+	</body>
+</html>
