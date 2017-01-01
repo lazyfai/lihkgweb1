@@ -2,6 +2,7 @@
 import os
 import json
 import requests
+import datetime
 from flask import Flask, render_template, send_from_directory
 
 app = Flask(__name__)
@@ -48,7 +49,8 @@ def listthread(threadid=None):
     for i in items:
         postid= i ['post_id']
         author = i['user_nickname']
-        posttime = i['reply_time']
+        postts = i['reply_time']
+        posttime = datetime.datetime.fromtimestamp(int(postts)).strftime('%Y-%m-%d %H:%M:%S')
         content = i['msg']
         threaditem = dict(id=postid,author=author,content=content,time=posttime)
         threadlist.append(threaditem)
