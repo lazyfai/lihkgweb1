@@ -8,7 +8,7 @@
 		<table border=1>
 {% for thread in threadlist %}
 <tr>
-	<td>Post #{{thread.id}} @ {{thread.time}} by {{thread.author}}</td>
+	<td>{{thread.author}} @ {{thread.time}}</td>
 </tr>
 <tr>
 	<td>{{thread.content|safe}}</td>

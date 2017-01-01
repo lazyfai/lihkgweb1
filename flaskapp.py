@@ -17,6 +17,10 @@ def index():
 def serveStaticResource(resource):
     return send_from_directory('static/', resource)
 
+@app.route('/assets/<path:resource>')
+def serveAsset(resource):
+    return redirect('https://lihkg.com/assets/'+resource)
+
 @app.route('/cat/<catid>')
 def listcat(catid=None):
     baseURL = 'https://lihkg.com/api_v1/'
