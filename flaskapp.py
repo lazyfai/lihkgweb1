@@ -3,6 +3,7 @@ import os
 import json
 import requests
 import datetime
+import pytz
 from flask import Flask, render_template, send_from_directory, redirect
 
 app = Flask(__name__)
@@ -91,7 +92,8 @@ def listthread(threadid=None,pageid=None):
         postid= i ['post_id']
         author = i['user_nickname']
         postts = i['reply_time']
-        posttime = datetime.datetime.fromtimestamp(int(postts)).strftime('%Y-%m-%d %H:%M:%S')
+        tz = pytz.timezone('Asia/Hong_Kong')
+        posttime = datetime.datetime.fromtimestamp(int(postts), tz=tz).strftime('%Y-%m-%d %H:%M:%S')
         content = i['msg']
         threaditem = dict(id=postid,author=author,content=content,time=posttime)
         threadlist.append(threaditem)
