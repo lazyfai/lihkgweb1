@@ -2,9 +2,9 @@
 import os
 import json
 import requests
-import Flask
+import flask
 
-app = Flask.Flask(__name__)
+app = flask.Flask(__name__)
 app.config.from_pyfile('flask.cfg')
 
 @app.route('/')
