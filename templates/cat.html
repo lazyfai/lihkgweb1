@@ -4,12 +4,19 @@
 		<title>Category{{ catid }}</title>
 	</head>
 	<body>
-		<pre>
 {% if catlist %}
-{{ catlist }}
+		<table>
+{% for cat in catlist %}
+<tr>
+	<td>{{cat.id}}</td>
+	<td>{{cat.title}}</td>
+	<td>{{cat.author}}</td>
+	<td>{{cat.url}}</td>
+</tr>
+{% endfor %}
+		</table>
 {% else %}
 Nothing here
 {% endif %}
-		</pre>
 	</body>
 </html>
