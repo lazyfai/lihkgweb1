@@ -30,9 +30,7 @@ def index():
 def healthcheck():
     env = []
     for k, v in os.environ.items():
-        var['name'] = k
-        var['value'] = v
-        env.append(var)
+        env.append(dict(name=k, value=v))
     return render_template('env.html', env=env)
 
 @app.route('/<path:resource>')
