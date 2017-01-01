@@ -19,7 +19,7 @@ def serveStaticResource(resource):
 
 @app.route('/assets/<path:resource>')
 def serveAsset(resource):
-    return redirect('https://lihkg.com/assets/'+resource)
+    return redirect('https://lihkg.com/assets/'+resource, 301)
 
 @app.route('/cat/<catid>')
 def listcat(catid=None):
