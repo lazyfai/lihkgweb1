@@ -11,7 +11,19 @@ app.config.from_pyfile('flask.cfg')
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    baseURL = 'https://lihkg.com/api_v1_1/'
+    listURL = 'system/property'
+    resp = requests.get(url=baseURL+listURL)
+    data = json.loads(resp.text)
+    channellist = []
+    items = data['response']['category_list']
+    for i in items:
+        name = i['name']
+        catid= i ['cat_id']
+        url = "/cat/%s/page/1" % (catid)
+        channelitem = dict(id=catid,name=name,url=url)
+        channellist.append(channelitem)
+    return render_template('channel.html', channellist=channellist)
 
 @app.route('/<path:resource>')
 def serveStaticResource(resource):
@@ -21,13 +33,13 @@ def serveStaticResource(resource):
 def serveAsset(resource):
     return redirect('https://lihkg.com/assets/'+resource, 301)
 
-@app.route('/cat/<catid>')
-def listcat(catid=None):
+@app.route('/cat/<catid>/page/<pageid>')
+def listcat(catid=None,pageid=None):
     baseURL = 'https://lihkg.com/api_v1/'
     listURL = 'thread/category'
     listParams = dict()
     listParams['cat_id'] = catid
-    listParams['page'] = 1
+    listParams['page'] = pageid
     listParams['count'] = 50
     resp = requests.get(url=baseURL+listURL, params=listParams)
     data = json.loads(resp.text)
