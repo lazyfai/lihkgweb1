@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 	<head>
-		<title>Thread {{threadid}}</title>
+		<title>{{author}} - {{threadname}}</title>
 	</head>
 	<body>
 	<a href = '/thread/{{threadid}}/page/1'>First</a>
@@ -14,7 +14,7 @@
 {% if lastpage %}
 	<a href = '/thread/{{threadid}}/page/{{lastpage}}'>Last</a>
 {% endif %}
-	<hr/>
+<hr/>
 {% if threadlist %}
 		<table border=1 width="80%">
 {% for thread in threadlist %}
@@ -29,6 +29,17 @@
 		</table>
 {% else %}
 Nothing here
+{% endif %}
+<hr/>
+	<a href = '/thread/{{threadid}}/page/1'>First</a>
+{% if prevpage %}
+	<a href = '/thread/{{threadid}}/page/{{prevpage}}'>Prev</a>
+{% endif %}
+{% if nextpage %}
+	<a href = '/thread/{{threadid}}/page/{{nextpage}}'>Next</a>
+{% endif %}
+{% if lastpage %}
+	<a href = '/thread/{{threadid}}/page/{{lastpage}}'>Last</a>
 {% endif %}
 	</body>
 </html>
