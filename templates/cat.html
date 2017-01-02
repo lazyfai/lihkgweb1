@@ -21,17 +21,15 @@
 <tr>
 	<th>標題</th>
 	<th>作者</th>
-	<th>回覆</th>
-	<th>正評</th>
-	<th>負評</th>
+	<th>資料</th>
 </tr>
 {% for cat in catlist %}
 <tr>
 	<td><a href={{cat.url}}>{{cat.title}}</a></td>
 	<td>{{cat.author}}</td>
-	<td>{{cat.replies}}</td>
-	<td>{{cat.like}}</td>
-	<td>{{cat.dislike}}</td>
+	<td>
+		{{cat.lastreply}} // {{cat.replies}}個回覆 // {{cat.like}}正評 // {{cat.dislike}}負評
+	</td>
 </tr>
 {% endfor %}
 		</table>

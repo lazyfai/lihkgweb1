@@ -70,8 +70,11 @@ def listcat(catid=None,pageid=None):
         like = i['like_count']
         dislike = i['dislike_count']
         replies = i['no_of_reply']
+        lastreplyts = i['last_reply_time']
+        tz = pytz.timezone('Asia/Hong_Kong')
+        lastreply = datetime.datetime.fromtimestamp(int(lastreplyts), tz=tz).strftime('%Y-%m-%d %H:%M:%S')
         url = "/thread/%s/page/1" % (threadid)
-        catitem = dict(id=threadid,title=title,author=author,url=url,like=like,dislike=dislike,replies=replies)
+        catitem = dict(id=threadid,title=title,author=author,url=url,like=like,dislike=dislike,replies=replies,lastreply=lastreply)
         catlist.append(catitem)
     return render_template('cat.html', catid=catid, catname=catname, catlist=catlist, nextpage=nextpage, prevpage=prevpage)
 
