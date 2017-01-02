@@ -74,7 +74,7 @@ def listcat(catid=None,pageid=None):
         lastreplyts = i['last_reply_time']
         tz = pytz.timezone('Asia/Hong_Kong')
         #lastreply = datetime.datetime.fromtimestamp(int(lastreplyts), tz=tz).strftime('%Y-%m-%d %H:%M:%S')
-        lastreply = arrow.get(lastreplyts).humanize(locale='zh')
+        lastreply = arrow.get(lastreplyts).humanize(locale='zh_tw')
         url = "/thread/%s/page/1" % (threadid)
         catitem = dict(id=threadid,title=title,author=author,url=url,like=like,dislike=dislike,replies=replies,lastreply=lastreply)
         catlist.append(catitem)
@@ -107,7 +107,7 @@ def listthread(threadid=None,pageid=None):
         postts = i['reply_time']
         tz = pytz.timezone('Asia/Hong_Kong')
         # posttime = datetime.datetime.fromtimestamp(int(postts), tz=tz).strftime('%Y-%m-%d %H:%M:%S')
-        posttime = arrow.get(postts).humanize(locale='zh')
+        posttime = arrow.get(postts).humanize(locale='zh_tw')
         content = i['msg']
         threaditem = dict(id=postid,author=author,content=content,time=posttime)
         threadlist.append(threaditem)
