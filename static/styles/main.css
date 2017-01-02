@@ -1,7 +1,7 @@
 body {
-	background-color: black;
+	background-color: grey;
 	color: white;
 }
 table,th,td {
-	border: 1px solid black;
+	border: 1px solid blue;
 }
