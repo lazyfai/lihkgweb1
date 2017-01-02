@@ -19,15 +19,19 @@
 {% if catlist %}
 		<table border=0 width="80%">
 <tr>
-	<th>ID</th>
 	<th>標題</th>
 	<th>作者</th>
+	<th>回覆</th>
+	<th>正評</th>
+	<th>負評</th>
 </tr>
 {% for cat in catlist %}
 <tr>
-	<td>{{cat.id}}</td>
 	<td><a href={{cat.url}}>{{cat.title}}</a></td>
 	<td>{{cat.author}}</td>
+	<td>{{cat.replies}}</td>
+	<td>{{cat.like}}</td>
+	<td>{{cat.dislike}}</td>
 </tr>
 {% endfor %}
 		</table>

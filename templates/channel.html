@@ -7,12 +7,10 @@
 {% if channellist %}
 		<table border=0 width="80%" align="left">
 <tr>
-	<th>台號</th>
 	<th>台名</th>
 </tr>
 {% for channel in channellist %}
 <tr>
-	<td>{{channel.catid}}</td>
 	<td><a href={{channel.url}}>{{channel.name}}</a></td>
 </tr>
 {% endfor %}

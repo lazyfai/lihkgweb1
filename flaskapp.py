@@ -67,8 +67,11 @@ def listcat(catid=None,pageid=None):
         title = i['title']
         threadid= i ['thread_id']
         author = i['user']['nickname']
+        like = i['like_count']
+        dislike = i['dislike_count']
+        replies = i['no_of_reply']
         url = "/thread/%s/page/1" % (threadid)
-        catitem = dict(id=threadid,title=title,author=author,url=url)
+        catitem = dict(id=threadid,title=title,author=author,url=url,like=like,dislike=dislike,replies=replies)
         catlist.append(catitem)
     return render_template('cat.html', catid=catid, catname=catname, catlist=catlist, nextpage=nextpage, prevpage=prevpage)
 
