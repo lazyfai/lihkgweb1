@@ -7,15 +7,15 @@
 	<body>
 	<b>{{author}} - {{threadname}}</b>
 	<hr/>
-	<a href = '/thread/{{threadid}}/page/1'>First</a>
+	<a href = '/thread/{{threadid}}/page/1'>第一頁</a>
 {% if prevpage %}
-	<a href = '/thread/{{threadid}}/page/{{prevpage}}'>Prev</a>
+	<a href = '/thread/{{threadid}}/page/{{prevpage}}'>上一頁</a>
 {% endif %}
 {% if nextpage %}
-	<a href = '/thread/{{threadid}}/page/{{nextpage}}'>Next</a>
+	<a href = '/thread/{{threadid}}/page/{{nextpage}}'>下一頁</a>
 {% endif %}
 {% if lastpage %}
-	<a href = '/thread/{{threadid}}/page/{{lastpage}}'>Last</a>
+	<a href = '/thread/{{threadid}}/page/{{lastpage}}'>最後一頁</a>
 {% endif %}
 <hr/>
 	<a href = '/cat/{{catid}}/page/1'>返回{{catname}}</a>
@@ -38,15 +38,15 @@ Nothing here
 <hr/>
 	<a href = '/cat/{{catid}}/page/1'>返回{{catname}}</a>
 <hr/>
-	<a href = '/thread/{{threadid}}/page/1'>First</a>
+	<a href = '/thread/{{threadid}}/page/1'>第一頁</a>
 {% if prevpage %}
-	<a href = '/thread/{{threadid}}/page/{{prevpage}}'>Prev</a>
+	<a href = '/thread/{{threadid}}/page/{{prevpage}}'>上一頁</a>
 {% endif %}
 {% if nextpage %}
-	<a href = '/thread/{{threadid}}/page/{{nextpage}}'>Next</a>
+	<a href = '/thread/{{threadid}}/page/{{nextpage}}'>下一頁</a>
 {% endif %}
 {% if lastpage %}
-	<a href = '/thread/{{threadid}}/page/{{lastpage}}'>Last</a>
+	<a href = '/thread/{{threadid}}/page/{{lastpage}}'>最後一頁</a>
 {% endif %}
 	</body>
 </html>
