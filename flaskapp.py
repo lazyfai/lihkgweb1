@@ -4,6 +4,7 @@ import json
 import requests
 import datetime
 import pytz
+import arrow
 from flask import Flask, render_template, send_from_directory, redirect
 
 app = Flask(__name__)
@@ -72,7 +73,8 @@ def listcat(catid=None,pageid=None):
         replies = i['no_of_reply']
         lastreplyts = i['last_reply_time']
         tz = pytz.timezone('Asia/Hong_Kong')
-        lastreply = datetime.datetime.fromtimestamp(int(lastreplyts), tz=tz).strftime('%Y-%m-%d %H:%M:%S')
+        #lastreply = datetime.datetime.fromtimestamp(int(lastreplyts), tz=tz).strftime('%Y-%m-%d %H:%M:%S')
+        lastreply = arrow.get(lastreplyts).humanize(locale='zh')
         url = "/thread/%s/page/1" % (threadid)
         catitem = dict(id=threadid,title=title,author=author,url=url,like=like,dislike=dislike,replies=replies,lastreply=lastreply)
         catlist.append(catitem)
@@ -104,7 +106,8 @@ def listthread(threadid=None,pageid=None):
         author = i['user_nickname']
         postts = i['reply_time']
         tz = pytz.timezone('Asia/Hong_Kong')
-        posttime = datetime.datetime.fromtimestamp(int(postts), tz=tz).strftime('%Y-%m-%d %H:%M:%S')
+        # posttime = datetime.datetime.fromtimestamp(int(postts), tz=tz).strftime('%Y-%m-%d %H:%M:%S')
+        posttime = arrow.get(postts).humanize(locale='zh')
         content = i['msg']
         threaditem = dict(id=postid,author=author,content=content,time=posttime)
         threadlist.append(threaditem)
