@@ -1,9 +1,11 @@
 <!doctype html>
 <html>
 	<head>
-		<title>{{author}} - {{threadname}}</title>
+		<title>{{catname}} - {{author}} - {{threadname}}</title>
 	</head>
 	<body>
+	<b>{{author}} - {{threadname}}</b>
+	<hr/>
 	<a href = '/thread/{{threadid}}/page/1'>First</a>
 {% if prevpage %}
 	<a href = '/thread/{{threadid}}/page/{{prevpage}}'>Prev</a>
@@ -14,6 +16,8 @@
 {% if lastpage %}
 	<a href = '/thread/{{threadid}}/page/{{lastpage}}'>Last</a>
 {% endif %}
+<hr/>
+	<a href = '/cat/{{catid}}/page/1'>返回{{catname}}</a>
 <hr/>
 {% if threadlist %}
 		<table border=1 width="80%">
@@ -30,6 +34,8 @@
 {% else %}
 Nothing here
 {% endif %}
+<hr/>
+	<a href = '/cat/{{catid}}/page/1'>返回{{catname}}</a>
 <hr/>
 	<a href = '/thread/{{threadid}}/page/1'>First</a>
 {% if prevpage %}
