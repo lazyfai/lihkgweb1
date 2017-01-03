@@ -5,6 +5,7 @@ import requests
 import datetime
 import pytz
 import arrow
+import time
 from pymongo import MongoClient
 from flask import Flask, render_template, send_from_directory, redirect
 
@@ -19,6 +20,7 @@ def index():
     client = MongoClient(os.environ['OPENSHIFT_MONGODB_DB_URL'])
     db = client['lihkgweb']
     collection = db['cache']
+    collection.ensure_index("cachetime", expireAfterSeconds=300)
     cacheitem = { "cat" : 0, "page" : 0 }
     resp = collection.find_one(cacheitem)
     if 'data' in resp.keys():
@@ -31,6 +33,7 @@ def index():
         print ("Saving to cache")
         print (data)
         cacheitem['data'] = data
+        cacheitem['cachetime'] = time.time()
         cacheid = collection.insert_one(cacheitem)
     channellist = []
     items = data['response']['category_list']
