@@ -141,7 +141,7 @@ def listthread(threadid=None,pageid=None):
     threadname = data['response']['title']
     catid = data['response']['category']['cat_id']
     catname = data['response']['category']['name']
-    author = data['response']['user_nickname']
+    threadauthor = data['response']['user_nickname']
     lastpage = int(data['response']['total_page'])
     if int(pageid) == lastpage:
         nextpage = None
@@ -161,7 +161,7 @@ def listthread(threadid=None,pageid=None):
         content = i['msg']
         threaditem = dict(id=postid,author=author,content=content,time=posttime)
         threadlist.append(threaditem)
-    return render_template('thread.html', author=author, catid=catid, catname=catname, threadid=threadid, threadname=threadname, threadlist=threadlist, nextpage=nextpage, prevpage=prevpage, lastpage=lastpage)
+    return render_template('thread.html', author=threadauthor, catid=catid, catname=catname, threadid=threadid, threadname=threadname, threadlist=threadlist, nextpage=nextpage, prevpage=prevpage, lastpage=lastpage)
 
 if __name__ == '__main__':
     app.run()
