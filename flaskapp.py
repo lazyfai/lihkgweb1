@@ -25,13 +25,13 @@ def index():
     resp = collection.find_one(cacheitem)
     if resp is not None and 'data' in resp.keys():
         data = resp['data']
-        print ("Got cached item")
-        print (data)
+        print ("Got cached item for ", cacheitem)
+        #print (data)
     else:
         resp = requests.get(url=baseURL+listURL)
         data = json.loads(resp.text)
-        print ("Saving to cache")
-        print (data)
+        print ("Save to cache for ", cacheitem)
+        #print (data)
         cacheitem['data'] = data
         cacheitem['cachetime'] = time.time()
         cacheid = collection.insert(cacheitem)
@@ -77,13 +77,13 @@ def listcat(catid=None,pageid=None):
     resp = collection.find_one(cacheitem)
     if resp is not None and 'data' in resp.keys():
         data = resp['data']
-        print ("Got cached item")
-        print (data)
+        print ("Got cached item for ", cacheitem)
+        #print (data)
     else:
         resp = requests.get(url=baseURL+listURL, params=listParams)
         data = json.loads(resp.text)
-        print ("Saving to cache")
-        print (data)
+        print ("Save to cache for ", cacheitem)
+        #print (data)
         cacheitem['data'] = data
         cacheitem['cachetime'] = time.time()
         cacheid = collection.insert(cacheitem)
@@ -118,8 +118,24 @@ def listcat(catid=None,pageid=None):
 def listthread(threadid=None,pageid=None):
     baseURL = 'https://lihkg.com/api_v1_1/'
     listURL = 'thread/%s/page/%s' % ( threadid, pageid )
-    resp = requests.get(url=baseURL+listURL)
-    data = json.loads(resp.text)
+    client = MongoClient(os.environ['OPENSHIFT_MONGODB_DB_URL'])
+    db = client['lihkgweb']
+    collection = db['cache']
+    collection.ensure_index("cachetime", expireAfterSeconds=60)
+    cacheitem = { "thread" : threadid , "page" : pageid }
+    resp = collection.find_one(cacheitem)
+    if resp is not None and 'data' in resp.keys():
+        data = resp['data']
+        print ("Got cached item for ", cacheitem)
+        #print (data)
+    else:
+        resp = requests.get(url=baseURL+listURL)
+        data = json.loads(resp.text)
+        print ("Save to cache for ", cacheitem)
+        #print (data)
+        cacheitem['data'] = data
+        cacheitem['cachetime'] = time.time()
+        cacheid = collection.insert(cacheitem)
     threadlist = []
     items = data['response']['item_data']
     threadname = data['response']['title']
