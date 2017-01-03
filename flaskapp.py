@@ -33,7 +33,7 @@ def index():
         #print ("Save to cache for ", cacheitem)
         #print (data)
         cacheitem['data'] = data
-        cacheitem['cachetime'] = time.time()
+        cacheitem['cachetime'] = datetime.datetime.utcnow()
         cacheid = collection.insert(cacheitem)
     channellist = []
     items = data['response']['category_list']
@@ -85,7 +85,7 @@ def listcat(catid=None,pageid=None):
         #print ("Save to cache for ", cacheitem)
         #print (data)
         cacheitem['data'] = data
-        cacheitem['cachetime'] = time.time()
+        cacheitem['cachetime'] = datetime.datetime.utcnow()
         cacheid = collection.insert(cacheitem)
     catlist = []
     catname = data['response']['category']['name']
@@ -134,7 +134,7 @@ def listthread(threadid=None,pageid=None):
         #print ("Save to cache for ", cacheitem)
         #print (data)
         cacheitem['data'] = data
-        cacheitem['cachetime'] = time.time()
+        cacheitem['cachetime'] = datetime.datetime.utcnow()
         cacheid = collection.insert(cacheitem)
     threadlist = []
     items = data['response']['item_data']
