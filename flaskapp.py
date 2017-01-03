@@ -5,6 +5,7 @@ import requests
 import datetime
 import pytz
 import arrow
+from pymongo import MongoClient
 from flask import Flask, render_template, send_from_directory, redirect
 
 app = Flask(__name__)
@@ -15,8 +16,22 @@ app.config.from_pyfile('flask.cfg')
 def index():
     baseURL = 'https://lihkg.com/api_v1_1/'
     listURL = 'system/property'
-    resp = requests.get(url=baseURL+listURL)
-    data = json.loads(resp.text)
+    client = MongoClient(os.envion['OPENSHIFT_MONGODB_DB_URL'])
+    db = client['lihkgweb']
+    collection = db['cache']
+    cacheitem = { "cat" : 0, "page" : 0 }
+    resp = collection.find_one(cacheitem)
+    if 'data' in resp.keys():
+        data = json.loads(resp['data'])
+        print ("Got cached item")
+        print (data)
+    else:
+        resp = requests.get(url=baseURL+listURL)
+        data = json.loads(resp.text)
+        print ("Saving to cache")
+        print (data)
+        cacheitem['data'] = data
+        cacheid = collection.insert_one(cacheitem)
     channellist = []
     items = data['response']['category_list']
     for i in items:
