@@ -4,3 +4,4 @@ BeautifulSoup4
 pytz
 arrow
 pymongo
+newrelic
