@@ -34,7 +34,7 @@ def index():
         print (data)
         cacheitem['data'] = data
         cacheitem['cachetime'] = time.time()
-        cacheid = collection.insert_one(cacheitem)
+        cacheid = collection.insert(cacheitem).inserted_id
     channellist = []
     items = data['response']['category_list']
     for i in items:
