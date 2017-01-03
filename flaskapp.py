@@ -24,7 +24,7 @@ def index():
     cacheitem = { "cat" : 0, "page" : 0 }
     resp = collection.find_one(cacheitem)
     if resp is not None and 'data' in resp.keys():
-        data = json.loads(resp['data'])
+        data = resp['data']
         print ("Got cached item")
         print (data)
     else:
