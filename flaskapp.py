@@ -20,7 +20,7 @@ def index():
     client = MongoClient(os.environ['OPENSHIFT_MONGODB_DB_URL'])
     db = client['lihkgweb']
     collection = db['cache']
-    collection.ensure_index("cachetime", expireAfterSeconds=300)
+    collection.ensure_index("cachetime", expireAfterSeconds=60)
     cacheitem = { "cat" : 0, "page" : 0 }
     resp = collection.find_one(cacheitem)
     if resp is not None and 'data' in resp.keys():
@@ -69,8 +69,24 @@ def listcat(catid=None,pageid=None):
     listParams['cat_id'] = catid
     listParams['page'] = pageid
     listParams['count'] = 50
-    resp = requests.get(url=baseURL+listURL, params=listParams)
-    data = json.loads(resp.text)
+    client = MongoClient(os.environ['OPENSHIFT_MONGODB_DB_URL'])
+    db = client['lihkgweb']
+    collection = db['cache']
+    collection.ensure_index("cachetime", expireAfterSeconds=60)
+    cacheitem = { "cat" : catid, "page" : pageid }
+    resp = collection.find_one(cacheitem)
+    if resp is not None and 'data' in resp.keys():
+        data = resp['data']
+        print ("Got cached item")
+        print (data)
+    else:
+        resp = requests.get(url=baseURL+listURL, params=listParams)
+        data = json.loads(resp.text)
+        print ("Saving to cache")
+        print (data)
+        cacheitem['data'] = data
+        cacheitem['cachetime'] = time.time()
+        cacheid = collection.insert(cacheitem)
     catlist = []
     catname = data['response']['category']['name']
     items = data['response']['items']
