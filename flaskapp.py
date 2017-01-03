@@ -16,7 +16,7 @@ app.config.from_pyfile('flask.cfg')
 def index():
     baseURL = 'https://lihkg.com/api_v1_1/'
     listURL = 'system/property'
-    client = MongoClient(os.envion['OPENSHIFT_MONGODB_DB_URL'])
+    client = MongoClient(os.environ['OPENSHIFT_MONGODB_DB_URL'])
     db = client['lihkgweb']
     collection = db['cache']
     cacheitem = { "cat" : 0, "page" : 0 }
