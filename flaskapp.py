@@ -25,12 +25,12 @@ def index():
     resp = collection.find_one(cacheitem)
     if resp is not None and 'data' in resp.keys():
         data = resp['data']
-        print ("Got cached item for ", cacheitem)
+        #print ("Got cached item for ", cacheitem)
         #print (data)
     else:
         resp = requests.get(url=baseURL+listURL)
         data = json.loads(resp.text)
-        print ("Save to cache for ", cacheitem)
+        #print ("Save to cache for ", cacheitem)
         #print (data)
         cacheitem['data'] = data
         cacheitem['cachetime'] = time.time()
@@ -77,12 +77,12 @@ def listcat(catid=None,pageid=None):
     resp = collection.find_one(cacheitem)
     if resp is not None and 'data' in resp.keys():
         data = resp['data']
-        print ("Got cached item for ", cacheitem)
+        #print ("Got cached item for ", cacheitem)
         #print (data)
     else:
         resp = requests.get(url=baseURL+listURL, params=listParams)
         data = json.loads(resp.text)
-        print ("Save to cache for ", cacheitem)
+        #print ("Save to cache for ", cacheitem)
         #print (data)
         cacheitem['data'] = data
         cacheitem['cachetime'] = time.time()
@@ -126,12 +126,12 @@ def listthread(threadid=None,pageid=None):
     resp = collection.find_one(cacheitem)
     if resp is not None and 'data' in resp.keys():
         data = resp['data']
-        print ("Got cached item for ", cacheitem)
+        #print ("Got cached item for ", cacheitem)
         #print (data)
     else:
         resp = requests.get(url=baseURL+listURL)
         data = json.loads(resp.text)
-        print ("Save to cache for ", cacheitem)
+        #print ("Save to cache for ", cacheitem)
         #print (data)
         cacheitem['data'] = data
         cacheitem['cachetime'] = time.time()
