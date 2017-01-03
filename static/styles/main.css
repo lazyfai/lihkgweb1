@@ -13,3 +13,7 @@ th,td {
 }
 tr:nth-child(even) {background-color: #f2f2f2}
 tr:nth-child(old) {background-color: #ffffff}
+img { 
+	max-width: 80%; 
+	height: auto; 
+}
