@@ -77,11 +77,13 @@ def listcat(catid=None,pageid=None):
     resp = collection.find_one(cacheitem)
     if resp is not None and 'data' in resp.keys():
         data = resp['data']
+        cache_miss = false
         #print ("Got cached item for ", cacheitem)
         #print (data)
     else:
         resp = requests.get(url=baseURL+listURL, params=listParams)
         data = json.loads(resp.text)
+        cache_miss = true
         #print ("Save to cache for ", cacheitem)
         #print (data)
     catlist = []
@@ -89,11 +91,12 @@ def listcat(catid=None,pageid=None):
     items = data['response']['items']
     if len(items) < 50:
         nextpage = None
-        # If it is not last page, it should be finalized, save to cache
-        cacheitem['data'] = data
-        cacheitem['cachetime'] = datetime.datetime.utcnow()
-        cacheid = collection.insert(cacheitem)
     else:
+        # If it is not last page, it should be finalized, save to cache
+        if cache_miss:
+            cacheitem['data'] = data
+            cacheitem['cachetime'] = datetime.datetime.utcnow()
+            cacheid = collection.insert(cacheitem)
         nextpage = int(pageid) + 1
     if int(pageid) == 1:
         prevpage = None
@@ -127,11 +130,13 @@ def listthread(threadid=None,pageid=None):
     resp = collection.find_one(cacheitem)
     if resp is not None and 'data' in resp.keys():
         data = resp['data']
+        cache_miss = false
         #print ("Got cached item for ", cacheitem)
         #print (data)
     else:
         resp = requests.get(url=baseURL+listURL)
         data = json.loads(resp.text)
+        cache_miss = true
         #print ("Save to cache for ", cacheitem)
         #print (data)
     threadlist = []
@@ -145,10 +150,11 @@ def listthread(threadid=None,pageid=None):
         nextpage = None
     else:
         nextpage = int(pageid) + 1
+        if cache_miss:
         # If it is not last page, it should be finalized, save to cache
-        cacheitem['data'] = data
-        cacheitem['cachetime'] = datetime.datetime.utcnow()
-        cacheid = collection.insert(cacheitem)
+            cacheitem['data'] = data
+            cacheitem['cachetime'] = datetime.datetime.utcnow()
+            cacheid = collection.insert(cacheitem)
     if int(pageid) == 1:
         prevpage = None
     else:
