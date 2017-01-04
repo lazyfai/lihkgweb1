@@ -20,7 +20,7 @@ def index():
     client = MongoClient(os.environ['OPENSHIFT_MONGODB_DB_URL'])
     db = client['lihkgweb']
     collection = db['cache']
-    collection.ensure_index("cachetime", expireAfterSeconds=60)
+    collection.ensure_index("cachetime", expireAfterSeconds=600)
     cacheitem = { "cat" : 0, "page" : 0 }
     resp = collection.find_one(cacheitem)
     if resp is not None and 'data' in resp.keys():
@@ -72,7 +72,7 @@ def listcat(catid=None,pageid=None):
     client = MongoClient(os.environ['OPENSHIFT_MONGODB_DB_URL'])
     db = client['lihkgweb']
     collection = db['cache']
-    collection.ensure_index("cachetime", expireAfterSeconds=60)
+    collection.ensure_index("cachetime", expireAfterSeconds=600)
     cacheitem = { "cat" : catid, "page" : pageid }
     resp = collection.find_one(cacheitem)
     if resp is not None and 'data' in resp.keys():
@@ -84,14 +84,15 @@ def listcat(catid=None,pageid=None):
         data = json.loads(resp.text)
         #print ("Save to cache for ", cacheitem)
         #print (data)
-        cacheitem['data'] = data
-        cacheitem['cachetime'] = datetime.datetime.utcnow()
-        cacheid = collection.insert(cacheitem)
     catlist = []
     catname = data['response']['category']['name']
     items = data['response']['items']
-    if len(items) < 49:
+    if len(items) < 50:
         nextpage = None
+        # If it is not last page, it should be finalized, save to cache
+        cacheitem['data'] = data
+        cacheitem['cachetime'] = datetime.datetime.utcnow()
+        cacheid = collection.insert(cacheitem)
     else:
         nextpage = int(pageid) + 1
     if int(pageid) == 1:
@@ -121,7 +122,7 @@ def listthread(threadid=None,pageid=None):
     client = MongoClient(os.environ['OPENSHIFT_MONGODB_DB_URL'])
     db = client['lihkgweb']
     collection = db['cache']
-    collection.ensure_index("cachetime", expireAfterSeconds=60)
+    collection.ensure_index("cachetime", expireAfterSeconds=600)
     cacheitem = { "thread" : threadid , "page" : pageid }
     resp = collection.find_one(cacheitem)
     if resp is not None and 'data' in resp.keys():
@@ -133,9 +134,6 @@ def listthread(threadid=None,pageid=None):
         data = json.loads(resp.text)
         #print ("Save to cache for ", cacheitem)
         #print (data)
-        cacheitem['data'] = data
-        cacheitem['cachetime'] = datetime.datetime.utcnow()
-        cacheid = collection.insert(cacheitem)
     threadlist = []
     items = data['response']['item_data']
     threadname = data['response']['title']
@@ -147,6 +145,10 @@ def listthread(threadid=None,pageid=None):
         nextpage = None
     else:
         nextpage = int(pageid) + 1
+        # If it is not last page, it should be finalized, save to cache
+        cacheitem['data'] = data
+        cacheitem['cachetime'] = datetime.datetime.utcnow()
+        cacheid = collection.insert(cacheitem)
     if int(pageid) == 1:
         prevpage = None
     else:
