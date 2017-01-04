@@ -77,13 +77,13 @@ def listcat(catid=None,pageid=None):
     resp = collection.find_one(cacheitem)
     if resp is not None and 'data' in resp.keys():
         data = resp['data']
-        cache_miss = false
+        cache_miss = False
         #print ("Got cached item for ", cacheitem)
         #print (data)
     else:
         resp = requests.get(url=baseURL+listURL, params=listParams)
         data = json.loads(resp.text)
-        cache_miss = true
+        cache_miss = True
         #print ("Save to cache for ", cacheitem)
         #print (data)
     catlist = []
@@ -130,13 +130,13 @@ def listthread(threadid=None,pageid=None):
     resp = collection.find_one(cacheitem)
     if resp is not None and 'data' in resp.keys():
         data = resp['data']
-        cache_miss = false
+        cache_miss = False
         #print ("Got cached item for ", cacheitem)
         #print (data)
     else:
         resp = requests.get(url=baseURL+listURL)
         data = json.loads(resp.text)
-        cache_miss = true
+        cache_miss = True
         #print ("Save to cache for ", cacheitem)
         #print (data)
     threadlist = []
