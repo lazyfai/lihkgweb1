@@ -6,20 +6,18 @@
 		<link rel="stylesheet" type="text/css" href= "{{url_for('static',filename='styles/main.css')}}">
 	</head>
 	<body>
-{% if channellist %}
-	<table>
-<tr>
-	<th>台名</th>
-</tr>
-{% for channel in channellist %}
-<tr>
-	<td><a href={{channel.url}}>{{channel.name}}</a></td>
-</tr>
-{% endfor %}
-		</table>
-{% else %}
-Nothing here
-{% endif %}
+	<div class="container">
+	{% if channellist %}
+	<table class="striped">
+		<tr><th>台名</th></tr>
+		{% for channel in channellist %}
+		<tr><td><a class="waves-effect waves-light btn" href={{channel.url}}>{{channel.name}}</a></td></tr>
+		{% endfor %}
+	</table>
+	{% else %}
+	Nothing here
+	{% endif %}
+	</div>
 	</body>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
 </html>
