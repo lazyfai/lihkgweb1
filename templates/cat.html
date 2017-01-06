@@ -32,7 +32,10 @@
 		</div>
 		{% if catlist %}
 		<table class="striped">
+			<thead>
 			<tr><th>標題</th><th>作者</th><th>資料</th></tr>
+			</thead>
+			<tbody>
 			{% for cat in catlist %}
 			<tr>
 				<td><a href={{cat.url}}>{{cat.title}}</a></td>
@@ -40,6 +43,7 @@
 				<td>{{cat.lastreply}} // {{cat.replies}}個回覆 // {{cat.like}}正評 // {{cat.dislike}}負評</td>
 			</tr>
 			{% endfor %}
+			</tbody>
 		</table>
 		{% else %}
 		Nothing here

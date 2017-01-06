@@ -37,12 +37,14 @@
 		</div>
 	</div>
 	{% if threadlist %}
-	<table>
+	<table class="striped">
+		<tbody>
 		{% for thread in threadlist %}
 		<tr>
 			<td>{{thread.author}} @ {{thread.time}}<hr/>{{thread.content|safe}}</td>
 		</tr>
 		{% endfor %}
+		</tbody>
 	</table>
 	{% else %}
 	Nothing here

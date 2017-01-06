@@ -9,10 +9,14 @@
 	<div class="container">
 	{% if channellist %}
 	<table class="striped">
+		<thead>
 		<tr><th>台名</th></tr>
+		</thead>
+		<tbody>
 		{% for channel in channellist %}
 		<tr><td><a class="waves-effect waves-light btn" href={{channel.url}}>{{channel.name}}</a></td></tr>
 		{% endfor %}
+		</tbody>
 	</table>
 	{% else %}
 	Nothing here
