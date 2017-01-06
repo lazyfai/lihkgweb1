@@ -31,20 +31,15 @@
 			{% endif %}
 		</div>
 		{% if catlist %}
-		<table class="striped">
-			<thead>
-			<tr><th>標題</th><th>作者</th><th>資料</th></tr>
-			</thead>
-			<tbody>
+		<ul class="collection">
 			{% for cat in catlist %}
-			<tr>
-				<td><a href={{cat.url}}>{{cat.title}}</a></td>
-				<td>{{cat.author}}</td>
-				<td>{{cat.lastreply}} // {{cat.replies}}個回覆 // {{cat.like}}正評 // {{cat.dislike}}負評</td>
-			</tr>
+			<a class="collection-item" href={{cat.url}}>
+				<span class="title">{{cat.title}}</span><br/>
+				<span class="black-text" style="font-size: 80%">{{cat.author}}</span><br/>
+				<span class="blue-text" style="font-size: 50%">{{cat.lastreply}} // {{cat.replies}}個回覆 // {{cat.like}}正評 // {{cat.dislike}}負評</span>
+			</a>
 			{% endfor %}
-			</tbody>
-		</table>
+		</ul>
 		{% else %}
 		Nothing here
 		{% endif %}
