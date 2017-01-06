@@ -28,13 +28,9 @@ def index():
     resp = collection.find_one(cacheitem)
     if resp is not None and 'data' in resp.keys():
         data = resp['data']
-        #print ("Got cached item for ", cacheitem)
-        #print (data)
     else:
         resp = requests.get(url=baseURL+listURL)
         data = json.loads(resp.text)
-        #print ("Save to cache for ", cacheitem)
-        #print (data)
         cacheitem['data'] = data
         cacheitem['cachetime'] = datetime.datetime.utcnow()
         cacheid = collection.insert(cacheitem)
@@ -64,7 +60,7 @@ def serveStaticResource(resource):
 def serveAsset(resource):
     return redirect('https://lihkg.com/assets/'+resource, 301)
 
-@app.route('/cat/<catid>/page/<pageid>')
+@app.route('/cat/<int:catid>/page/<int:pageid>')
 def listcat(catid=None,pageid=None):
     baseURL = 'https://lihkg.com/api_v1_1/'
     listURL = 'thread/category'
@@ -81,14 +77,10 @@ def listcat(catid=None,pageid=None):
     if resp is not None and 'data' in resp.keys():
         data = resp['data']
         cache_miss = False
-        #print ("Got cached item for ", cacheitem)
-        #print (data)
     else:
         resp = requests.get(url=baseURL+listURL, params=listParams)
         data = json.loads(resp.text)
         cache_miss = True
-        #print ("Save to cache for ", cacheitem)
-        #print (data)
     catlist = []
     catname = data['response']['category']['name']
     items = data['response']['items']
@@ -100,11 +92,11 @@ def listcat(catid=None,pageid=None):
             cacheitem['data'] = data
             cacheitem['cachetime'] = datetime.datetime.utcnow()
             cacheid = collection.insert(cacheitem)
-        nextpage = int(pageid) + 1
-    if int(pageid) == 1:
+        nextpage = pageid + 1
+    if pageid == 1:
         prevpage = None
     else:
-        prevpage = int(pageid) - 1
+        prevpage = pageid - 1
     for i in items:
         title = i['title']
         threadid= i ['thread_id']
@@ -114,14 +106,13 @@ def listcat(catid=None,pageid=None):
         replies = i['no_of_reply']
         lastreplyts = i['last_reply_time']
         tz = pytz.timezone('Asia/Hong_Kong')
-        #lastreply = datetime.datetime.fromtimestamp(int(lastreplyts), tz=tz).strftime('%Y-%m-%d %H:%M:%S')
         lastreply = arrow.get(lastreplyts).humanize(locale='zh_tw')
         url = "/thread/%s/page/1" % (threadid)
         catitem = dict(id=threadid,title=title,author=author,url=url,like=like,dislike=dislike,replies=replies,lastreply=lastreply)
         catlist.append(catitem)
     return render_template('cat.html', catid=catid, catname=catname, catlist=catlist, nextpage=nextpage, prevpage=prevpage)
 
-@app.route('/thread/<threadid>/page/<pageid>')
+@app.route('/thread/<int:threadid>/page/<int:pageid>')
 def listthread(threadid=None,pageid=None):
     baseURL = 'https://lihkg.com/api_v1_1/'
     listURL = 'thread/%s/page/%s' % ( threadid, pageid )
@@ -134,14 +125,10 @@ def listthread(threadid=None,pageid=None):
     if resp is not None and 'data' in resp.keys():
         data = resp['data']
         cache_miss = False
-        #print ("Got cached item for ", cacheitem)
-        #print (data)
     else:
         resp = requests.get(url=baseURL+listURL)
         data = json.loads(resp.text)
         cache_miss = True
-        #print ("Save to cache for ", cacheitem)
-        #print (data)
     threadlist = []
     items = data['response']['item_data']
     threadname = data['response']['title']
@@ -149,25 +136,24 @@ def listthread(threadid=None,pageid=None):
     catname = data['response']['category']['name']
     threadauthor = data['response']['user_nickname']
     lastpage = int(data['response']['total_page'])
-    if int(pageid) == lastpage:
+    if pageid == lastpage:
         nextpage = None
     else:
-        nextpage = int(pageid) + 1
+        nextpage = pageid + 1
         if cache_miss:
         # If it is not last page, it should be finalized, save to cache
             cacheitem['data'] = data
             cacheitem['cachetime'] = datetime.datetime.utcnow()
             cacheid = collection.insert(cacheitem)
-    if int(pageid) == 1:
+    if pageid == 1:
         prevpage = None
     else:
-        prevpage = int(pageid) - 1
+        prevpage = pageid - 1
     for i in items:
         postid= i ['post_id']
         author = i['user_nickname']
         postts = i['reply_time']
         tz = pytz.timezone('Asia/Hong_Kong')
-        # posttime = datetime.datetime.fromtimestamp(int(postts), tz=tz).strftime('%Y-%m-%d %H:%M:%S')
         posttime = arrow.get(postts).humanize(locale='zh_tw')
         content = i['msg']
         threaditem = dict(id=postid,author=author,content=content,time=posttime)
