@@ -7,9 +7,11 @@
 	</head>
 	<body>
 	{% if channellist %}
+		<div class="collection">
 		{% for channel in channellist %}
 		<a class="collection-item" href={{channel.url}}>{{channel.name}}</a>
 		{% endfor %}
+		</div>
 	{% else %}
 	Nothing here
 	{% endif %}
