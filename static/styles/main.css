@@ -6,8 +6,6 @@ table {
 	width: 90%;
 }
 img { 
-	max-width: 50%; 
-	width: 50%; 
-	max-height: 20%; 
-	height: 20%; 
+	max-width: 20%; 
+	max-height: 10%; 
 }
