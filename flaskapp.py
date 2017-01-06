@@ -12,15 +12,18 @@ from flask import Flask, render_template, send_from_directory, redirect
 app = Flask(__name__)
 app.config.from_pyfile('flask.cfg')
 #app.debug = True
+client = MongoClient(os.environ['OPENSHIFT_MONGODB_DB_URL'])
+db = client['lihkgweb']
+collection = db['cache']
 
 @app.route('/')
 def index():
     baseURL = 'https://lihkg.com/api_v1_1/'
     listURL = 'system/property'
-    client = MongoClient(os.environ['OPENSHIFT_MONGODB_DB_URL'])
-    db = client['lihkgweb']
-    collection = db['cache']
-    collection.ensure_index("cachetime", expireAfterSeconds=600)
+    #client = MongoClient(os.environ['OPENSHIFT_MONGODB_DB_URL'])
+    #db = client['lihkgweb']
+    #collection = db['cache']
+    #collection.ensure_index("cachetime", expireAfterSeconds=600)
     cacheitem = { "cat" : 0, "page" : 0 }
     resp = collection.find_one(cacheitem)
     if resp is not None and 'data' in resp.keys():
@@ -69,10 +72,10 @@ def listcat(catid=None,pageid=None):
     listParams['cat_id'] = catid
     listParams['page'] = pageid
     listParams['count'] = 50
-    client = MongoClient(os.environ['OPENSHIFT_MONGODB_DB_URL'])
-    db = client['lihkgweb']
-    collection = db['cache']
-    collection.ensure_index("cachetime", expireAfterSeconds=600)
+    #client = MongoClient(os.environ['OPENSHIFT_MONGODB_DB_URL'])
+    #db = client['lihkgweb']
+    #collection = db['cache']
+    #collection.ensure_index("cachetime", expireAfterSeconds=600)
     cacheitem = { "cat" : catid, "page" : pageid }
     resp = collection.find_one(cacheitem)
     if resp is not None and 'data' in resp.keys():
@@ -122,10 +125,10 @@ def listcat(catid=None,pageid=None):
 def listthread(threadid=None,pageid=None):
     baseURL = 'https://lihkg.com/api_v1_1/'
     listURL = 'thread/%s/page/%s' % ( threadid, pageid )
-    client = MongoClient(os.environ['OPENSHIFT_MONGODB_DB_URL'])
-    db = client['lihkgweb']
-    collection = db['cache']
-    collection.ensure_index("cachetime", expireAfterSeconds=600)
+    #client = MongoClient(os.environ['OPENSHIFT_MONGODB_DB_URL'])
+    #db = client['lihkgweb']
+    #collection = db['cache']
+    #collection.ensure_index("cachetime", expireAfterSeconds=600)
     cacheitem = { "thread" : threadid , "page" : pageid }
     resp = collection.find_one(cacheitem)
     if resp is not None and 'data' in resp.keys():
