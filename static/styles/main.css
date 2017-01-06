@@ -3,17 +3,11 @@ body {
 	color: black;
 }
 table {
-	width: 100%;
+	width: 90%;
 }
-table,th,td {
-	border: 1px solid grey;
-}
-th,td {
-	text-align: left;
-}
-tr:nth-child(even) {background-color: #f2f2f2}
-tr:nth-child(old) {background-color: #ffffff}
 img { 
 	max-width: 50%; 
-	height: auto; 
+	width: 50%; 
+	max-height: 20%; 
+	height: 20%; 
 }
