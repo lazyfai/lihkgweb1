@@ -2,50 +2,67 @@
 <html>
 	<head>
 		<title>{{catname}}</title>
-		<link rel= "stylesheet" type= "text/css" href= "{{url_for('static',filename='styles/main.css')}}">
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+		<link rel="stylesheet" type="text/css" href= "{{url_for('static',filename='styles/main.css')}}">
 	</head>
 	<body>
-	<b>{{catname}}</b>
-	<hr/>
-	<a href = '/cat/{{catid}}/page/1'>第一頁</a>
-{% if prevpage %}
-	<a href = '/cat/{{catid}}/page/{{prevpage}}'>上一頁</a>
-{% endif %}
-{% if nextpage %}
-	<a href = '/cat/{{catid}}/page/{{nextpage}}'>下一頁</a>
-{% endif %}
-<hr/>
-	<a href = '/'>轉台</a>
-<hr/>
-{% if catlist %}
-	<table>
-<tr>
-	<th>標題</th>
-	<th>作者</th>
-	<th>資料</th>
-</tr>
-{% for cat in catlist %}
-<tr>
-	<td><a href={{cat.url}}>{{cat.title}}</a></td>
-	<td>{{cat.author}}</td>
-	<td>
-		{{cat.lastreply}} // {{cat.replies}}個回覆 // {{cat.like}}正評 // {{cat.dislike}}負評
-	</td>
-</tr>
-{% endfor %}
+	<div class="container">
+		<div class="row">
+			<div class="col s12">
+				<b>{{catname}}</b>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col s3">
+				<a href = '/'>轉台</a>
+			</div>
+			<div class="col s3">
+				<a href = '/cat/{{catid}}/page/1'>第一頁</a>
+			</div>
+			{% if prevpage %}
+			<div class="col s3">
+				<a href = '/cat/{{catid}}/page/{{prevpage}}'>上一頁</a>
+			</div>
+			{% endif %}
+			{% if nextpage %}
+			<div class="col s3">
+				<a href = '/cat/{{catid}}/page/{{nextpage}}'>下一頁</a>
+			</div>
+			{% endif %}
+		</div>
+		{% if catlist %}
+		<table class="striped">
+			<tr><th>標題</th><th>作者</th><th>資料</th></tr>
+			{% for cat in catlist %}
+			<tr>
+				<td><a href={{cat.url}}>{{cat.title}}</a></td>
+				<td>{{cat.author}}</td>
+				<td>{{cat.lastreply}} // {{cat.replies}}個回覆 // {{cat.like}}正評 // {{cat.dislike}}負評</td>
+			</tr>
+			{% endfor %}
 		</table>
-{% else %}
-Nothing here
-{% endif %}
-<hr/>
-	<a href = '/'>轉台</a>
-<hr/>
-	<a href = '/cat/{{catid}}/page/1'>第一頁</a>
-{% if prevpage %}
-	<a href = '/cat/{{catid}}/page/{{prevpage}}'>上一頁</a>
-{% endif %}
-{% if nextpage %}
-	<a href = '/cat/{{catid}}/page/{{nextpage}}'>下一頁</a>
-{% endif %}
+		{% else %}
+		Nothing here
+		{% endif %}
+		<div class="row">
+			<div class="col s3">
+				<a href = '/'>轉台</a>
+			</div>
+			<div class="col s3">
+				<a href = '/cat/{{catid}}/page/1'>第一頁</a>
+			</div>
+			{% if prevpage %}
+			<div class="col s3">
+				<a href = '/cat/{{catid}}/page/{{prevpage}}'>上一頁</a>
+			</div>
+			{% endif %}
+			{% if nextpage %}
+			<div class="col s3">
+				<a href = '/cat/{{catid}}/page/{{nextpage}}'>下一頁</a>
+			</div>
+			{% endif %}
+		</div>
+		</div>
 	</body>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
 </html>
